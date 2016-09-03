@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160903064418) do
+ActiveRecord::Schema.define(version: 20160903075528) do
 
   create_table "applications", force: :cascade do |t|
     t.string   "name"
@@ -18,6 +18,17 @@ ActiveRecord::Schema.define(version: 20160903064418) do
     t.string   "platform"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "releases", force: :cascade do |t|
+    t.boolean  "is_latest"
+    t.boolean  "is_release"
+    t.integer  "version_code"
+    t.string   "version_name"
+    t.text     "path"
+    t.integer  "applicaton_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
 end

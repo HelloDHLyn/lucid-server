@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  is_latest: false
+  is_release: false
+  version_code: 1
+  version_name: MyString
+  path: MyText
+  applicaton_id: 1
+
+two:
+  is_latest: false
+  is_release: false
+  version_code: 1
+  version_name: MyString
+  path: MyText
+  applicaton_id: 1
