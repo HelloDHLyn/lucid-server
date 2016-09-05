@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       end
 
       scope '/releases' do
+        get '/:package' => 'releases#show', :constraints => { :package => /[^\/]+/ }
         get '/' => 'releases#index'
       end
     end

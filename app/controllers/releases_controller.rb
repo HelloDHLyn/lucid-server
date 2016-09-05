@@ -1,5 +1,5 @@
 class ReleasesController < ApplicationController
-  before_action :set_release, only: [:show, :update, :destroy]
+  # before_action :set_release, only: [:show, :update, :destroy]
 
   # GET /releases
   def index
@@ -8,9 +8,11 @@ class ReleasesController < ApplicationController
     render json: @releases
   end
 
-  # GET /releases/1
+  # GET /releases/:package
   def show
-    render json: @release
+    @releases = Release.where('applicaton_id' => Application.where('package' => params[:package]).pluck(:id))
+
+    render json: @releases
   end
 
   # POST /releases
