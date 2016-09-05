@@ -1,5 +1,5 @@
 class ReleasesController < ApplicationController
-  # before_action :set_release, only: [:show, :update, :destroy]
+  before_action :auth
 
   # GET /releases
   def index
@@ -41,9 +41,12 @@ class ReleasesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_release
-      @release = Release.find(params[:id])
+    def auth
+      user = User.find_by('access_token' => request.headers['X-Access-Token'])
+
+      if !user
+        head :forbidden 
+      end
     end
 
     # Only allow a trusted parameter "white list" through.

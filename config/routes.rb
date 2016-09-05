@@ -10,6 +10,10 @@ Rails.application.routes.draw do
         get '/:package' => 'releases#show', :constraints => { :package => /[^\/]+/ }
         get '/' => 'releases#index'
       end
+
+      scope '/users' do
+        post '/' => 'users#login'
+      end
     end
   end
 end

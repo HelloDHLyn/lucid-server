@@ -1,5 +1,5 @@
 class ApplicationsController < ApplicationController
-  before_action :set_application, only: [:show, :update, :destroy]
+  before_action :auth
 
   # GET /applications
   def index
@@ -10,6 +10,8 @@ class ApplicationsController < ApplicationController
 
   # GET /applications/1
   def show
+    @applications = Application.all
+
     render json: @application
   end
 
@@ -39,9 +41,12 @@ class ApplicationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_application
-      @application = Application.find(params[:id])
+    def auth
+      user = User.find_by('access_token' => request.headers['X-Access-Token'])
+
+      if !user
+        head :forbidden 
+      end
     end
 
     # Only allow a trusted parameter "white list" through.
