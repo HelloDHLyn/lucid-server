@@ -16,10 +16,28 @@ class UsersController < ApplicationController
           :access_token => @user.access_token
         }
       else
-        print 'Stub!'
+        head 500 # Internal Server Error
       end
     else
-      print 'Stub!'
+      head 422 # Unprocessable Entity
+    end
+  end
+
+  # POST /users/email
+  # 계정의 존재 여부를 확인한다.
+  def email_validation
+    @user = User.find_by('email' => params[:email])
+
+    if @user
+      render :json => {
+        :email => params[:email],
+        :exist => true
+      }
+    else
+      render :json => {
+        :email => params[:email],
+        :exist => false
+      }
     end
   end
 end
