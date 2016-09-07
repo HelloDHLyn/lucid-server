@@ -1,5 +1,5 @@
 class ReleasesController < ApplicationController
-  before_action :set_release, only: [:show, :update, :destroy]
+  before_action :auth
 
   # GET /releases
   def index
@@ -8,40 +8,20 @@ class ReleasesController < ApplicationController
     render json: @releases
   end
 
-  # GET /releases/1
+  # GET /releases/:package
   def show
-    render json: @release
-  end
+    @releases = Release.where('applicaton_id' => Application.where('package' => params[:package]).pluck(:id))
 
-  # POST /releases
-  def create
-    @release = Release.new(release_params)
-
-    if @release.save
-      render json: @release, status: :created, location: @release
-    else
-      render json: @release.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /releases/1
-  def update
-    if @release.update(release_params)
-      render json: @release
-    else
-      render json: @release.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /releases/1
-  def destroy
-    @release.destroy
+    render json: @releases
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_release
-      @release = Release.find(params[:id])
+    def auth
+      user = User.find_by('access_token' => request.headers['X-Access-Token'])
+
+      if !user
+        head 401 # Unauthorize
+      end
     end
 
     # Only allow a trusted parameter "white list" through.
