@@ -16,14 +16,6 @@ class ApplicationsController < ApplicationController
   end
 
   private
-    def auth
-      user = User.find_by('access_token' => request.headers['X-Access-Token'])
-
-      if !user
-        head 401 # Unauthorize
-      end
-    end
-
     # Only allow a trusted parameter "white list" through.
     def application_params
       params.require(:application).permit(:name, :package, :platform)

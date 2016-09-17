@@ -2,6 +2,7 @@ require 'digest'
 require 'securerandom'
 
 class UsersController < ApplicationController
+  before_action :auth, only: [:logout]
 
   # POST /users
   # 로그인한다.
@@ -20,6 +21,18 @@ class UsersController < ApplicationController
       end
     else
       head 422 # Unprocessable Entity
+    end
+  end
+
+  # DELETE /users
+  # 로그아웃한다.
+  def logout
+    @access_user.access_token = ''
+
+    if @access_user.save
+      head 204 # No Content
+    else
+      head 500 # Internal Server Error
     end
   end
 
