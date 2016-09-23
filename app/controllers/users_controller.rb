@@ -2,7 +2,7 @@ require 'digest'
 require 'securerandom'
 
 class UsersController < ApplicationController
-  before_action :auth, only: [:logout]
+  before_action :auth, only: [:get, :logout]
 
   # POST /users
   # 로그인한다.
@@ -34,6 +34,18 @@ class UsersController < ApplicationController
     else
       head 500 # Internal Server Error
     end
+  end
+
+  # GET /users/:id
+  # 유저의 정보를 가져온다.
+  def get
+    user = User.find(params[:id])
+
+    render :json => {
+      :id => user.id,
+      :email => user.email,
+      :username => user.username
+    }
   end
 
   # POST /users/email
