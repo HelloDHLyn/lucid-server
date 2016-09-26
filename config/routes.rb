@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
       scope '/users' do
         post '/' => 'users#login'
+        delete '/' => 'users#logout'
+        get '/:id' => 'users#get'
         post '/email' => 'users#email_validation'
       end
     end
