@@ -5,19 +5,13 @@ class ApplicationsController < ApplicationController
   def index
     @applications = Application.all
 
-    render json: @applications
+    render :json => @applications.to_json
   end
 
   # GET /applications/1
   def show
     @applications = Application.all
 
-    render json: @application
+    render :json => @applications.to_json
   end
-
-  private
-    # Only allow a trusted parameter "white list" through.
-    def application_params
-      params.require(:application).permit(:name, :package, :platform)
-    end
 end

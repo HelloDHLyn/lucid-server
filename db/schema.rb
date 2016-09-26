@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160917162503) do
+ActiveRecord::Schema.define(version: 20160926092502) do
 
   create_table "applications", force: :cascade do |t|
     t.string   "name"
@@ -29,8 +29,9 @@ ActiveRecord::Schema.define(version: 20160917162503) do
     t.string   "version_name"
     t.text     "path"
     t.integer  "applicaton_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.text     "release_note",  default: "", null: false
   end
 
   create_table "users", force: :cascade do |t|
